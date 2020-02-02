@@ -10,16 +10,18 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
 
+import com.activemq.app.model.Product;
+
 @Component
 public class MessageSender {
 
 	@Autowired
 	JmsTemplate jmsTemplate;
 
-	public void sendMessage(final String message) {
+	public void sendMessage(final Product product) {
 		jmsTemplate.send(new MessageCreator() {
 			public Message createMessage(Session session) throws JMSException {
-				ObjectMessage objectMessage = session.createObjectMessage(message);
+				ObjectMessage objectMessage = session.createObjectMessage(product);
 				return objectMessage;
 			}
 		});
